@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">RemoteAudioPlayer</string>
+    <string name="msg_not_song">无歌曲</string>
+    <string name="msg_no_status">未播放</string>
+    <string name="msg_select_music">选择音乐</string>
+    <string name="msg_continue_play">继续播放</string>
+    <string name="msg_pause">暂停</string>
+    <string name="msg_stop_playing">停止播放</string>
+    <string name="msg_unsupported_bluetooth">设备不支持蓝牙</string>
+    <string name="msg_select_devices">选择设备</string>
+    <string name="msg_not_connected">未连接</string>
+</resources>

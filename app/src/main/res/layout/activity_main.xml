@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/text_music_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:text="@string/msg_not_song"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:textSize="40sp"
+        android:textColor="@color/dark"
+        />
+
+    <TextView
+        android:layout_marginTop="100dp"
+        android:id="@+id/text_play_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/msg_no_status"
+        android:textColor="@color/dark"
+        android:textSize="20sp"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:id="@+id/text_connected_devices"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/msg_not_connected"
+        android:textColor="@color/dark"
+        android:textSize="20sp"
+        android:gravity="center"/>
+
+    <LinearLayout
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="80dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <Button
+            android:id="@+id/btn_select_devices"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/msg_select_devices"
+            />
+        <Button
+            android:id="@+id/btn_select_music"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/msg_select_music"
+            />
+
+        <Button
+            android:id="@+id/btn_continue_play"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/msg_continue_play"
+            />
+        <Button
+            android:id="@+id/btn_pause_song"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/msg_pause"
+            />
+        <Button
+            android:id="@+id/btn_stop_playing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/msg_stop_playing"
+            />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
