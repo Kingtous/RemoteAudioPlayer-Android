@@ -31,7 +31,7 @@ import butterknife.ButterKnife;
 import pub.devrel.easypermissions.EasyPermissions;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
 
     ConnectionHolder connectionHolder;
@@ -52,7 +52,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.btn_stop_playing)
     Button btnStopPlaying;
 
-    ArrayList<BluetoothDeviceModel> device_list=new ArrayList<>();
+    ArrayList<BluetoothDeviceModel> device_list = new ArrayList<>();
+    @BindView(R.id.btn_vol_up)
+    Button btnVolUp;
+    @BindView(R.id.btn_vol_down)
+    Button btnVolDown;
 
 
     @Override
@@ -71,13 +75,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View view) {
                 Set<BluetoothDevice> pairedDevices = ConnectionHolder.bluetoothAdapter.getBondedDevices();
-                for (BluetoothDevice device : pairedDevices){
-                    device_list.add(new BluetoothDeviceModel(device.getName(),device.getAddress()));
+                for (BluetoothDevice device : pairedDevices) {
+                    device_list.add(new BluetoothDeviceModel(device.getName(), device.getAddress()));
                 }
                 final Dialog dialog = new Dialog(MainActivity.this);
-                View listview = LayoutInflater.from(MainActivity.this).inflate(R.layout.view_bluetooth_list,null,false);
-                RecyclerView recyclerView= listview.findViewById(R.id.rv_bluetooth);
-                LinearLayoutManager manager=new LinearLayoutManager(MainActivity.this);
+                View listview = LayoutInflater.from(MainActivity.this).inflate(R.layout.view_bluetooth_list, null, false);
+                RecyclerView recyclerView = listview.findViewById(R.id.rv_bluetooth);
+                LinearLayoutManager manager = new LinearLayoutManager(MainActivity.this);
                 recyclerView.setLayoutManager(manager);
                 BluetoothDeviceAdapter adapter = new BluetoothDeviceAdapter(device_list);
                 adapter.setOnItemClickListener(new BluetoothDeviceAdapter.OnItemClickListener() {
@@ -104,27 +108,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnContinuePlay.setOnClickListener(this);
         btnPauseSong.setOnClickListener(this);
         btnStopPlaying.setOnClickListener(this);
+        btnVolUp.setOnClickListener(this);
+        btnVolDown.setOnClickListener(this);
     }
 
 
-    private void setSelectMusic(){
+    private void setSelectMusic() {
         String[] permissions = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
-        if (EasyPermissions.hasPermissions(this,permissions)){
-            if (checkDeviceSelected()){
+        if (EasyPermissions.hasPermissions(this, permissions)) {
+            if (checkDeviceSelected()) {
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("audio/mp3");
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
                 startActivityForResult(intent, ConfigHolder.REQUESTCODE_FILESELECT);
             }
-        }
-        else {
-            EasyPermissions.requestPermissions(this,"本功能需要读写权限才能运行",ConfigHolder.REQUESTCODE_READ_EXTERNAL,permissions);
+        } else {
+            EasyPermissions.requestPermissions(this, "本功能需要读写权限才能运行", ConfigHolder.REQUESTCODE_READ_EXTERNAL, permissions);
         }
     }
 
-    private boolean checkDeviceSelected(){
-        if (ConfigHolder.btModel==null){
-            Toast.makeText(this,"未选择设备",Toast.LENGTH_SHORT).show();
+    private boolean checkDeviceSelected() {
+        if (ConfigHolder.btModel == null) {
+            Toast.makeText(this, "未选择设备", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -133,12 +138,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode){
+        switch (requestCode) {
             case ConfigHolder.REQUESTCODE_FILESELECT:
                 if (resultCode == Activity.RESULT_OK) {
                     ConfigHolder.fileURI = data.getData();
                     String path = data.getData().getPath();
-                    String name = path.substring(path.lastIndexOf('/')+1);
+                    String name = path.substring(path.lastIndexOf('/') + 1);
                     textMusicName.setText(name);
                     // 传文件
                     FileSender sender = new FileSender(this);
@@ -153,27 +158,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        String action;
-        if (view.getId() == btnContinuePlay.getId()){
-            action = ConfigHolder.ACT_PLAY;
+        if (checkDeviceSelected()) {
+            String action;
+            if (view.getId() == btnContinuePlay.getId()) {
+                action = ConfigHolder.ACT_PLAY;
+            } else if (view.getId() == btnPauseSong.getId()) {
+                action = ConfigHolder.ACT_PAUSE;
+            } else if (view.getId() == btnStopPlaying.getId()) {
+                action = ConfigHolder.ACT_STOP;
+            } else if (view.getId() == btnVolUp.getId()) {
+                action = ConfigHolder.ACT_VOL_UP;
+            } else if (view.getId() == btnVolDown.getId()) {
+                action = ConfigHolder.ACT_VOL_DOWN;
+            } else {
+                return;
+            }
+            CommandSender sender = new CommandSender(this, action, "");
+            sender.execute();
         }
-        else if (view.getId() == btnPauseSong.getId()){
-            action = ConfigHolder.ACT_PAUSE;
-        }
-        else if (view.getId() == btnStopPlaying.getId()){
-            action = ConfigHolder.ACT_STOP;
-        }
-        else {
-            return;
-        }
-        CommandSender sender = new CommandSender(this,action,"");
-        sender.execute();
     }
 
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        EasyPermissions.onRequestPermissionsResult(requestCode,permissions,grantResults,this);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 }

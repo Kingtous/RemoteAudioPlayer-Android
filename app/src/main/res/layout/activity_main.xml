@@ -11,7 +11,7 @@
         android:id="@+id/text_music_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="100dp"
         android:text="@string/msg_not_song"
         android:gravity="center"
         android:layout_gravity="center"
@@ -40,13 +40,36 @@
         android:gravity="center"/>
 
     <LinearLayout
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft="80dp"
-        android:layout_marginRight="80dp"
+        android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
         >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            >
+
+            <Button
+                android:id="@+id/btn_vol_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/msg_volume_up"
+                />
+            <Button
+                android:id="@+id/btn_vol_down"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/msg_volume_down"
+                />
+
+        </LinearLayout>
+
         <Button
             android:id="@+id/btn_select_devices"
             android:layout_width="match_parent"

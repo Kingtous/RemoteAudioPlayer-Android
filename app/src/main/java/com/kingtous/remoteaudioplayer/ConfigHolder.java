@@ -13,6 +13,8 @@ public class ConfigHolder {
     public static final String ACT_PAUSE = "pause";
     public static final String ACT_STOP = "stop";
     public static final String ACT_PLAY = "play";
+    public static final String ACT_VOL_UP = "vol_up";
+    public static final String ACT_VOL_DOWN = "vol_down";
 
     public static BluetoothDeviceModel btModel;
     public static final String uuid = "fa288726-b927-4c4e-bf4b-f616f386332d";
